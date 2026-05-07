@@ -1,0 +1,18 @@
+# Python 缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 爬取结果文件（可选，不想上传就加上）
+results/
+*.csv
+*.json
+
+# 编辑器配置
+.vscode/
+.idea/
+
+# 系统文件
+.DS_Store
+Thumbs.db
