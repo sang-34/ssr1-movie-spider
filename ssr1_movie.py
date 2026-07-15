@@ -8,13 +8,18 @@ from urllib.parse import urljoin
 import json
 import multiprocessing
 from parsel import Selector
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+from pymongo import MongoClient, ASCENDING
 
 BASE_URL = "https://ssr1.scrape.center/"
 TOTAL_PAGE = 10
 RESULT_DIR = "results"
 TIMEOUT = 10
+
+SAVE_JSON = False
+
+MONGO_URI = "mongodb://127.0.0.1:27017"
+MONGO_DATABASE  = "spider_center"
+MONGO_COLLECTION = "ssr1_movies1"
 
 HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -32,6 +37,45 @@ HEADERS = {
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"',
 }
+
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+
+class MongoStorage:
+
+    def __init__(self):
+        self.client = MongoClient(MONGO_URI)
+        self.db = self.client[MONGO_DATABASE]
+        self.collection = self.db[MONGO_COLLECTION]
+        self.create_indexes()
+
+    def create_indexes(self):
+        self.collection.create_index([("url", ASCENDING)], unique=True, name="idx_url_unique")
+        self.collection.create_index([("name", ASCENDING)], name="idx_name")
+        self.collection.create_index([("score", ASCENDING)], name="idx_score")
+
+    def save(self, item):
+        update_item = item.copy()
+        created_at = update_item.pop("created_at")
+
+        result = self.collection.update_one(
+            {"url": item["url"]},
+            {
+                "$set": update_item,
+                "$setOnInsert": {
+                    "created_at": created_at,
+                },
+            },
+            upsert=True,
+        )
+
+        if result.upserted_id:
+            logging.info("insert %s success", item.get("name"))
+        elif result.modified_count:
+            logging.info("update %s success", item.get("name"))
+        else:
+            logging.info("remain %s", item.get("name"))
 
 
 def clean_text(value):
@@ -122,10 +166,10 @@ def parse_detail(url, html_text):
 
     return {
         "url": url,
-        "name": name,
-        "cover": cover,
+        "name": clean_text(name),
+        "cover": clean_text(cover),
         "categories": [clean_text(item) for item in categories if clean_text(item)],
-        "publish_at": clean_date(page_text),
+        "published_at": clean_date(page_text),
         "score": clean_score(score),
         "drama": clean_text(drama),
         "created_at": now,
@@ -134,7 +178,7 @@ def parse_detail(url, html_text):
 
 
 # 保存数据
-def save_data(item):
+def save_json(item):
     os.makedirs(RESULT_DIR, exist_ok=True)
 
     name = safe_filename(item.get("name"))
@@ -147,6 +191,8 @@ def save_data(item):
 
 
 def main():
+    storage = MongoStorage()
+
     for page in range(1, TOTAL_PAGE + 1):
         index_html = scrape_index(page)
         if not index_html:
@@ -162,7 +208,10 @@ def main():
             item = parse_detail(detail_url, detail_html)
             logging.info("scraping %s", item)
 
-            save_data(item)
+            storage.save(item)
+
+            if SAVE_JSON:
+                save_json(item)
 
 
 if __name__ == "__main__":
