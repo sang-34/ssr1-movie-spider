@@ -9,7 +9,7 @@ venv/
 env/
 
 # Logs
-../logs/
+logs/
 *.log
 
 # Spider outputs
