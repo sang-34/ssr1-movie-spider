@@ -11,6 +11,8 @@ from storage.mongo_storage import MongoStorage
 from storage.redis_storage import RedisDeduper
 from utils.logger import init_logger
 
+logger = logging.getLogger(__name__)
+
 
 def save_json(item):
     os.makedirs(RESULT_DIR, exist_ok=True)
@@ -24,16 +26,30 @@ def save_json(item):
     logging.info("JSON saved: %s", data_path)
 
 
-def collect_detail_urls(deduper):
+def collect_detail_urls(deduper, stats):
     detail_urls = []
 
     for page in range(1, TOTAL_PAGE + 1):
+        logger.info("start crawling index page: %s", page)
+
         index_html = scrape_index(page)
         if not index_html:
+            logger.warning("index page request failed: %s", page)
+            stats["failed_index_pages"] += 1
             continue
 
-        for detail_url in parse_index(index_html):
+        page_detail_urls = list(parse_index(index_html))
+        logger.info(
+            "index page %s extracted detail urls: %s",
+            page,
+            len(page_detail_urls),
+        )
+
+        stats["total_detail_urls"] += len(page_detail_urls)
+
+        for detail_url in page_detail_urls:
             if deduper.is_crawled(detail_url):
+                stats["skipped_crawled_urls"] += 1
                 logging.info("already crawled, skip: %s", detail_url)
                 continue
 
@@ -44,6 +60,7 @@ def collect_detail_urls(deduper):
 
             detail_urls.append(detail_url)
 
+    logger.info("pending detail urls count: %s", len(detail_urls))
     return detail_urls
 
 
@@ -77,22 +94,28 @@ def is_valid_item(item):
     return True
 
 
-def crawl_detail_and_save(detail_url, storage, deduper):
+def crawl_detail_and_save(detail_url, storage, deduper, stats):
     detail_html = scrape_detail(detail_url)
     if not detail_html:
+        stats["failed_detail_urls"] += 1
+        logger.warning("detail page request failed: %s", detail_url)
         return
 
     item = parse_detail(detail_url, detail_html)
-    logging.info("parsed item: %s", item)
 
     if not is_valid_item(item):
-        logging.warning("invalid item, skip save and mark crawled: %s", detail_url)
+        stats["parse_failed_items"] += 1
+        logger.warning("invalid item, skip save and mark crawled: %s", detail_url)
         return
 
     save_success = storage.save(item)
     if not save_success:
-        logging.warning("save failed, skip mark crawled: %s", detail_url)
+        stats["save_failed_items"] += 1
+        logger.warning("save failed, skip mark crawled: %s", detail_url)
         return
+
+    stats["saved_items"] += 1
+    logger.info("movie saved successfully: %s", item.get("name"))
 
     if SAVE_JSON:
         save_json(item)
@@ -104,14 +127,34 @@ def crawl_detail_and_save(detail_url, storage, deduper):
 def main():
     init_logger()
 
+    stats = {
+        "total_detail_urls": 0,
+        "skipped_crawled_urls": 0,
+        "failed_index_pages": 0,
+        "failed_detail_urls": 0,
+        "parse_failed_items": 0,
+        "save_failed_items": 0,
+        "saved_items": 0,
+    }
+
+    logger.info("ssr1 movie spider started")
+
     storage = MongoStorage()
     deduper = RedisDeduper()
 
-    detail_urls = collect_detail_urls(deduper)
-    logging.info("detail url count: %s", len(detail_urls))
+    detail_urls = collect_detail_urls(deduper, stats)
 
     for detail_url in detail_urls:
-        crawl_detail_and_save(detail_url, storage, deduper)
+        crawl_detail_and_save(detail_url, storage, deduper, stats)
+
+    logger.info("ssr1 movie spider finished")
+    logger.info("total detail urls extracted: %s", stats["total_detail_urls"])
+    logger.info("skipped crawled urls: %s", stats["skipped_crawled_urls"])
+    logger.info("failed index pages: %s", stats["failed_index_pages"])
+    logger.info("failed detail urls: %s", stats["failed_detail_urls"])
+    logger.info("parse failed items: %s", stats["parse_failed_items"])
+    logger.info("save failed items: %s", stats["save_failed_items"])
+    logger.info("saved items: %s", stats["saved_items"])
 
 
 if __name__ == "__main__":
