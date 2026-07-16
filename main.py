@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from urllib.parse import urlparse
 
 from config import RESULT_DIR, SAVE_JSON, TOTAL_PAGE
 from spider.cleaner import safe_filename
@@ -46,6 +47,36 @@ def collect_detail_urls(deduper):
     return detail_urls
 
 
+def is_valid_item(item):
+    if not isinstance(item, dict):
+        logging.warning("invalid item type: %s", item)
+        return False
+
+    url = item.get("url")
+    name = item.get("name")
+    score = item.get("score")
+    drama = item.get("drama")
+
+    parsed_url = urlparse(url or "")
+    if not parsed_url.scheme or not parsed_url.netloc:
+        logging.warning("invalid item url: %s", item)
+        return False
+
+    if not name:
+        logging.warning("invalid item name: %s", item)
+        return False
+
+    if score is None:
+        logging.warning("invalid item score: %s", item)
+        return False
+
+    if not drama:
+        logging.warning("invalid item drama: %s", item)
+        return False
+
+    return True
+
+
 def crawl_detail_and_save(detail_url, storage, deduper):
     detail_html = scrape_detail(detail_url)
     if not detail_html:
@@ -54,7 +85,14 @@ def crawl_detail_and_save(detail_url, storage, deduper):
     item = parse_detail(detail_url, detail_html)
     logging.info("parsed item: %s", item)
 
-    storage.save(item)
+    if not is_valid_item(item):
+        logging.warning("invalid item, skip save and mark crawled: %s", detail_url)
+        return
+
+    save_success = storage.save(item)
+    if not save_success:
+        logging.warning("save failed, skip mark crawled: %s", detail_url)
+        return
 
     if SAVE_JSON:
         save_json(item)
