@@ -1,18 +1,29 @@
-# Python 缓存文件
+# Python cache
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
+*$py.class
 
-# 爬取结果文件（可选，不想上传就加上）
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Logs
+logs/
+*.log
+
+# Spider outputs
 results/
-*.csv
-*.json
+exports/
 
-# 编辑器配置
+# Local config / secrets
+.env
+.env.*
+
+# IDE
 .vscode/
 .idea/
 
-# 系统文件
+# OS
 .DS_Store
 Thumbs.db
