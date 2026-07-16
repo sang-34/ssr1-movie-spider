@@ -9,7 +9,7 @@ venv/
 env/
 
 # Logs
-logs/
+../logs/
 *.log
 
 # Spider outputs
@@ -27,3 +27,6 @@ exports/
 # OS
 .DS_Store
 Thumbs.db
+
+#
+ssr1_movie.py
