@@ -9,6 +9,7 @@ import json
 import multiprocessing
 from parsel import Selector
 from pymongo import MongoClient, ASCENDING
+import redis
 
 BASE_URL = "https://ssr1.scrape.center/"
 TOTAL_PAGE = 10
@@ -20,6 +21,14 @@ SAVE_JSON = False
 MONGO_URI = "mongodb://127.0.0.1:27017"
 MONGO_DATABASE  = "spider_center"
 MONGO_COLLECTION = "ssr1_movies1"
+
+REDIS_HOST = "localhost"
+REDIS_PORT = 6379
+REDIS_DB = 1
+REDIS_PASSWORD = "foobared"
+
+REDIS_DETAIL_URLS_KEY = "ssr1:movie:detail_urls"
+REDIS_CRAWLED_URLS_KEY = "ssr1:movie:crawled_urls"
 
 HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -40,6 +49,31 @@ HEADERS = {
 
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+
+class RedisDeduper:
+
+    def __init__(self):
+        self.client = redis.Redis(
+            host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB,
+            password=REDIS_PASSWORD, decode_responses=True,
+        )
+
+    def is_new_detail_url(self, url):
+        """
+        发现详情页 URL 时调用。
+        sadd 返回 1：说明 Redis set 中原来没有，是新 URL。
+        sadd 返回 0：说明已经存在，是重复 URL。
+        """
+        return self.client.sadd(REDIS_DETAIL_URLS_KEY, url) == 1
+
+    def is_crawled(self, url):
+        """判断详情页是否采集过"""
+        return self.client.sismember(REDIS_CRAWLED_URLS_KEY, url)
+
+    def mark_crawled(self, url):
+        """成功采集入库后标记"""
+        return self.client.sadd(REDIS_CRAWLED_URLS_KEY, url)
 
 
 class MongoStorage:
@@ -190,28 +224,56 @@ def save_json(item):
     logging.info("data saved successfully：%s", data_path)
 
 
-def main():
-    storage = MongoStorage()
+def collect_new_detail_urls(deduper):
+    """采集列表页, 提取详情页 url, 并去重"""
+    detail_urls = []
 
     for page in range(1, TOTAL_PAGE + 1):
         index_html = scrape_index(page)
         if not index_html:
             continue
 
-        detail_urls = parse_index(index_html)
-
-        for detail_url in detail_urls:
-            detail_html = scrape_detail(detail_url)
-            if not detail_html:
+        for detail_url in parse_index(index_html):
+            if deduper.is_crawled(detail_url):
+                logging.info("already crawled, skip: %s", detail_url)
                 continue
 
-            item = parse_detail(detail_url, detail_html)
-            logging.info("scraping %s", item)
+            if deduper.is_new_detail_url(detail_url):
+                logging.info("new detail url found: %s", detail_url)
+            else:
+                logging.info("found before but not crawled, retry: %s", detail_url)
 
-            storage.save(item)
+            detail_urls.append(detail_url)
 
-            if SAVE_JSON:
-                save_json(item)
+    return detail_urls
+
+
+def crawl_detail_and_save(detail_url, deduper, storage):
+    detail_html = scrape_detail(detail_url)
+    if not detail_html:
+        return
+
+    item = parse_detail(detail_url, detail_html)
+    logging.info("parsed item: %s", item)
+
+    storage.save(item)
+
+    if SAVE_JSON:
+        save_json(item)
+
+    deduper.mark_crawled(detail_url)
+    logging.info("marked crawled: %s", detail_url)
+
+
+def main():
+    storage = MongoStorage()
+    deduper = RedisDeduper()
+
+    detail_urls = collect_new_detail_urls(deduper)
+    logging.info("new detail url count: %s", len(detail_urls))
+
+    for detail_url in detail_urls:
+        crawl_detail_and_save(detail_url, deduper, storage)
 
 
 if __name__ == "__main__":
