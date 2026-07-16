@@ -1,0 +1,111 @@
+2026-07-16 10:53:58,229 - root - INFO - scraping https://ssr1.scrape.center/page/1
+2026-07-16 10:54:00,170 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/1
+2026-07-16 10:54:00,170 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/2
+2026-07-16 10:54:00,171 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/3
+2026-07-16 10:54:00,171 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/4
+2026-07-16 10:54:00,171 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/5
+2026-07-16 10:54:00,172 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/6
+2026-07-16 10:54:00,172 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/7
+2026-07-16 10:54:00,172 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/8
+2026-07-16 10:54:00,173 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/9
+2026-07-16 10:54:00,173 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/10
+2026-07-16 10:54:00,174 - root - INFO - scraping https://ssr1.scrape.center/page/2
+2026-07-16 10:54:02,928 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/11
+2026-07-16 10:54:02,928 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/12
+2026-07-16 10:54:02,929 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/13
+2026-07-16 10:54:02,929 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/14
+2026-07-16 10:54:02,929 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/15
+2026-07-16 10:54:02,929 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/16
+2026-07-16 10:54:02,930 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/17
+2026-07-16 10:54:02,930 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/18
+2026-07-16 10:54:02,930 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/19
+2026-07-16 10:54:02,930 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/20
+2026-07-16 10:54:02,931 - root - INFO - scraping https://ssr1.scrape.center/page/3
+2026-07-16 10:54:04,042 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/21
+2026-07-16 10:54:04,043 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/22
+2026-07-16 10:54:04,043 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/23
+2026-07-16 10:54:04,044 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/24
+2026-07-16 10:54:04,044 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/36
+2026-07-16 10:54:04,044 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/25
+2026-07-16 10:54:04,044 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/26
+2026-07-16 10:54:04,045 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/27
+2026-07-16 10:54:04,045 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/28
+2026-07-16 10:54:04,045 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/29
+2026-07-16 10:54:04,046 - root - INFO - scraping https://ssr1.scrape.center/page/4
+2026-07-16 10:54:05,259 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/30
+2026-07-16 10:54:05,259 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/31
+2026-07-16 10:54:05,259 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/32
+2026-07-16 10:54:05,260 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/33
+2026-07-16 10:54:05,260 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/34
+2026-07-16 10:54:05,260 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/35
+2026-07-16 10:54:05,260 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/37
+2026-07-16 10:54:05,261 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/38
+2026-07-16 10:54:05,261 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/39
+2026-07-16 10:54:05,261 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/40
+2026-07-16 10:54:05,262 - root - INFO - scraping https://ssr1.scrape.center/page/5
+2026-07-16 10:54:06,592 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/41
+2026-07-16 10:54:06,592 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/42
+2026-07-16 10:54:06,592 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/43
+2026-07-16 10:54:06,593 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/44
+2026-07-16 10:54:06,593 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/45
+2026-07-16 10:54:06,593 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/46
+2026-07-16 10:54:06,594 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/47
+2026-07-16 10:54:06,594 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/48
+2026-07-16 10:54:06,594 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/49
+2026-07-16 10:54:06,595 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/50
+2026-07-16 10:54:06,595 - root - INFO - scraping https://ssr1.scrape.center/page/6
+2026-07-16 10:54:08,223 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/51
+2026-07-16 10:54:08,224 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/52
+2026-07-16 10:54:08,224 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/53
+2026-07-16 10:54:08,224 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/54
+2026-07-16 10:54:08,225 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/55
+2026-07-16 10:54:08,225 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/56
+2026-07-16 10:54:08,225 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/57
+2026-07-16 10:54:08,226 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/58
+2026-07-16 10:54:08,226 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/59
+2026-07-16 10:54:08,226 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/60
+2026-07-16 10:54:08,226 - root - INFO - scraping https://ssr1.scrape.center/page/7
+2026-07-16 10:54:09,341 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/61
+2026-07-16 10:54:09,341 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/62
+2026-07-16 10:54:09,342 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/63
+2026-07-16 10:54:09,342 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/64
+2026-07-16 10:54:09,342 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/65
+2026-07-16 10:54:09,343 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/66
+2026-07-16 10:54:09,343 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/67
+2026-07-16 10:54:09,343 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/68
+2026-07-16 10:54:09,344 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/69
+2026-07-16 10:54:09,344 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/70
+2026-07-16 10:54:09,344 - root - INFO - scraping https://ssr1.scrape.center/page/8
+2026-07-16 10:54:10,638 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/71
+2026-07-16 10:54:10,638 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/72
+2026-07-16 10:54:10,638 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/73
+2026-07-16 10:54:10,639 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/74
+2026-07-16 10:54:10,639 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/75
+2026-07-16 10:54:10,639 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/76
+2026-07-16 10:54:10,640 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/77
+2026-07-16 10:54:10,640 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/78
+2026-07-16 10:54:10,640 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/79
+2026-07-16 10:54:10,641 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/80
+2026-07-16 10:54:10,641 - root - INFO - scraping https://ssr1.scrape.center/page/9
+2026-07-16 10:54:11,973 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/81
+2026-07-16 10:54:11,973 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/82
+2026-07-16 10:54:11,974 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/83
+2026-07-16 10:54:11,974 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/84
+2026-07-16 10:54:11,974 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/85
+2026-07-16 10:54:11,974 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/86
+2026-07-16 10:54:11,975 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/87
+2026-07-16 10:54:11,975 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/88
+2026-07-16 10:54:11,975 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/89
+2026-07-16 10:54:11,975 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/90
+2026-07-16 10:54:11,976 - root - INFO - scraping https://ssr1.scrape.center/page/10
+2026-07-16 10:54:13,362 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/91
+2026-07-16 10:54:13,363 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/92
+2026-07-16 10:54:13,363 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/93
+2026-07-16 10:54:13,364 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/94
+2026-07-16 10:54:13,364 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/95
+2026-07-16 10:54:13,364 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/96
+2026-07-16 10:54:13,365 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/97
+2026-07-16 10:54:13,365 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/98
+2026-07-16 10:54:13,365 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/99
+2026-07-16 10:54:13,366 - root - INFO - already crawled, skip: https://ssr1.scrape.center/detail/100
+2026-07-16 10:54:13,366 - root - INFO - detail url count: 0
