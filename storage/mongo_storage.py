@@ -1,6 +1,7 @@
 import logging
 
 from pymongo import ASCENDING, MongoClient
+from pymongo.errors import PyMongoError
 
 from config import MONGO_COLLECTION, MONGO_DATABASE, MONGO_URI
 
@@ -28,25 +29,29 @@ class MongoStorage:
         )
 
     def save(self, item):
-        update_item = item.copy()
-        created_at = update_item.pop("created_at")
+        try:
+            update_item = item.copy()
+            created_at = update_item.pop("created_at", None)
 
-        result = self.collection.update_one(
-            {"url": item["url"]},
-            {
-                "$set": update_item,
-                "$setOnInsert": {
-                    "created_at": created_at,
+            result = self.collection.update_one(
+                {"url": item["url"]},
+                {
+                    "$set": update_item,
+                    "$setOnInsert": {
+                        "created_at": created_at,
+                    },
                 },
-            },
-            upsert=True,
-        )
+                upsert=True,
+            )
 
-        if result.upserted_id:
-            logging.info("MongoDB insert success: %s", item.get("name"))
-        elif result.modified_count:
-            logging.info("MongoDB update success: %s", item.get("name"))
-        else:
-            logging.info("MongoDB no change: %s", item.get("name"))
+            if result.upserted_id:
+                logging.info("MongoDB insert success: %s", item.get("name"))
+            elif result.modified_count:
+                logging.info("MongoDB update success: %s", item.get("name"))
+            else:
+                logging.info("MongoDB no change: %s", item.get("name"))
 
-        return True
+            return True
+        except PyMongoError:
+            logging.exception("MongoDB save failed: %s", item.get("url"))
+            return False
